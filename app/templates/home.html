@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{%block title%}Remind Me{%endblock%}
+
+{%block nav_home%}active{%endblock%}
+
+{%block main%}
+
+<div class="row">
+    <div class="col-12">
+        <form action="" method="get">
+            {%csrf_token%}
+            <div class="form-row">
+                <div class="col-6">
+                    <input type="text" id="search_item" name="search_item" class="form-control"
+                           placeholder="Pesquisar Item">
+                </div>
+                <div class="col-4">
+                    <select class="selectpicker form-control" multiple="multiple" data-live-search="true"
+                            data-selected-text-format="value" name="itens_tags">
+                        <option value="all">All tags</option>
+                        {%for tag in all_tags%}
+                        <option value="{{tag.id}}">{{tag}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="form-control btn btn-primary btn-block">Search</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    {% for item in itens %}
+    <div class="col-12 mt-3">
+        <div class="media">
+            {%if item.image %}
+            <a href="{%url 'url_item_description' item.pk%}">
+                <img class="rounded float-left" src="{{item.image.url}}" alt="{{item.name}} image" width="150px"
+                     height='150px'>
+            </a>
+            {%else%}
+            <a href="{%url 'url_item_description' item.pk%}">
+                <img class="rounded float-left" src="/media/item_photos/no_img.jpeg" alt="No image" width="150px"
+                     height='150px'>
+            </a>
+            {%endif%}
+
+            <div class="media-body ml-2">
+
+                <h5 class="mt-0">
+                    <a href="{%url 'url_item_description' item.pk%}">{{item.name}}</a>
+                </h5>
+
+                Tags:
+                {%for x in item.tag.all%}
+                <span class="badge badge-primary">{{x.name}}</span>
+                {%endfor%}
+                <br>
+                Updated in {{item.last_update}}
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+{%endblock%}
+<script type="text/javascript">
+		$('select').selectpicker();
+
+
+
+
+</script>

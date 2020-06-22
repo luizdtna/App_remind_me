@@ -1,0 +1,113 @@
+{%extends 'base.html'%}
+{%load bootstrap%}
+
+{%block title%}Item Description{%endblock%}
+
+{%block main%}
+
+<div class="media">
+    {%if item.image%}
+    <img class="mr-3" src="{{item.image.url}}" alt="Generic placeholder image" width="300px">
+    {%else%}
+    <img class="mr-3" src="/media/item_photos/no_img.jpeg" alt="Generic placeholder image" width="300px">
+    {%endif%}
+    <div class="media-body">
+        <h5 class="mt-0">{{item.name}}</h5>
+        <p>
+            Tags:
+            {%for x in item.tag.all%}
+            <span class="badge badge-primary">{{x.name}}</span>
+            {%endfor%}
+        </p>
+        <p>Updated in {{item.last_update}}</p>
+        <div class="row-12">
+            <p>{{item.place}}</p>
+        </div>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_item">Delete</button>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="delete_item" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Item</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete <b>{{item}}</b>?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, I'm not</button>
+                        <a href="{%url 'url_delete_item' item.id%}" class="btn btn-danger">Yes, I'm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- update modal -->
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg">
+            Update
+        </button>
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Item Update</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="modal-body">
+
+                            {%csrf_token%}
+                            <div class="row">
+                                <div class="col-8">
+                                    {{form.name|bootstrap}}
+                                    <!--<input type="text" class="form-control" placeholder="Name">-->
+                                </div>
+                                <div class="col">
+                                    {{form.tag|bootstrap}}
+                                    <!--<select class="custom-select">
+                                        <option>Mustard</option>
+                                        <option>Ketchup</option>
+                                        <option>Relish</option>
+                                        <option>Mustard</option>
+                                    </select>-->
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    {{form.place|bootstrap}}
+                                    <!--<textarea class="form-control" placeholder="Describe where it is"
+                                              rows="3"></textarea>-->
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <div class="custom-file">
+
+                                        {{form.image|bootstrap}}
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--{{form.last_update}}-->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{%endblock%}

@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{% load bootstrap %}
+
+{%block title%}New Item Tag{%endblock%}
+
+{%block nav_item_tag%}active{%endblock%}
+
+{%block main%}
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12">
+            {{form.name|bootstrap}}
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Enviar</button>
+        </div>
+    </div>
+</form>
+{%endblock%}
