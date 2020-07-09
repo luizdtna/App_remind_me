@@ -1,5 +1,6 @@
-{% extends 'base.html' %}
 
+{% extends 'base.html' %}
+{%load static%}
 {%block title%}Remind Me{%endblock%}
 
 {%block nav_home%}active{%endblock%}
@@ -38,7 +39,7 @@
         <div class="media">
             {%if item.image %}
             <a href="{%url 'url_item_description' item.pk%}">
-                <img class="rounded float-left" src="{{item.image.url}}" alt="{{item.name}} image" width="150px"
+                <img class="rounded float-left" src="{{ item.image.url}}" alt="{{item.name}} image" width="150px"
                      height='150px'>
             </a>
             {%else%}

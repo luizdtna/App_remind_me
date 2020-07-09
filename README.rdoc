@@ -1,0 +1,31 @@
+Create virtual-env:
+python3 -m venv NAME_VENV
+
+If another virtualenv is activated, type in the terminal
+deactivate
+
+In the project folder, active the virtual-env:
+source NAME_VENV/bin/activate
+
+Install requirements:
+pip install -r requirements.dev.txt
+
+Creat a file in the project folder, and name it:
+.env
+
+In .env you have to put two variables:
+SECRET_KEY=afjsfknsdlfkncanklc
+DEBUG=True
+
+Now, you can creat the data base:
+python3 manage.py migrate 
+
+You can also creat a super user:
+python3 manage.py createsuperuser
+
+Finaly, you can run the project:
+python3 manage.py runserver
+
+
+
+
